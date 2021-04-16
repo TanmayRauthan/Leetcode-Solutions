@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int trap(vector<int>& h) {
+        int n=h.size(),i;
+        if(n==0)
+            return 0;
+        int l=1,r=n-2;
+        int maxl=h[0],maxr=h[n-1];
+        int ans=0;
+        while(l<=r)
+        {
+            if(maxl<=maxr)
+            {
+                if(h[l]>maxl)
+                    maxl=h[l];
+                ans+=maxl-h[l];
+                l++;
+            }
+            else
+            {
+                if(h[r]>maxr)
+                    maxr=h[r];
+                ans+=maxr-h[r];
+                r--;
+            }
+        }
+        return ans;
+    }
+};
