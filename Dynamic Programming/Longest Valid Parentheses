@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int longestValidParentheses(string a) {
+        stack<pair<int,int>> s;
+        int n=a.length();
+        vector<int> dp(n+5,0);
+        dp[0]=0;int ans=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(s.size()==0)
+            {
+                s.push({i,a[i-1]});
+            }
+            else
+            {
+                if(s.top().second=='('&&a[i-1]==')')
+                {
+                    dp[i]=i-s.top().first+1;
+                    dp[i]=dp[i]+dp[s.top().first-1];
+                    ans=max(ans,dp[i]);
+                    s.pop();
+                }
+                else
+                {
+                    s.push({i,a[i-1]});
+                }
+            }
+        }
+        return ans;
+    }
+};
