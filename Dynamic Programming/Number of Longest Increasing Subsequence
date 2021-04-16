@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& v) {
+        int n=v.size(),i,j;
+        vector<int> dp(n,1);
+        vector<int> x(n,1);
+        dp[0]=1;
+        int maxi=1;
+        for(i=1;i<n;i++)
+        {
+            for(j=0;j<i;j++)
+            {
+                if(v[i]>v[j]&&dp[i]<=dp[j]+1)
+                {
+                    if(dp[i]==dp[j]+1)
+                        x[i]=x[i]+x[j];
+                    else
+                        x[i]=x[j];
+                    dp[i]=dp[j]+1;
+                }
+            }
+            maxi=max(dp[i],maxi);
+        }
+        cout<<endl;
+        int cnt=0;
+        for(i=0;i<n;i++)
+        {
+            //cout<<dp[i]<<" ";
+            if(dp[i]==maxi)
+                cnt=cnt+x[i];
+        }
+        return cnt;
+    }
+};
