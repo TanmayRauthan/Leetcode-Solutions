@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& v) {
+        if(v.size()==0)
+            return 0;
+        vector<int> ar(v.size());
+        int j=1;
+        ar[0]=v[0];
+        for(int i=1;i<v.size();i++)
+        {
+            auto it=lower_bound(ar.begin(),ar.end(),v[i]);
+            if(it==ar.end())
+                ar[j++]=v[i];
+            else
+                *it=v[i];
+        }
+        return j;
+    }
+};
