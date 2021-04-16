@@ -1,0 +1,32 @@
+class Solution {    
+public:
+    int n,m;
+    int dp[505][505];
+    int minDistance(string s, string r) {
+         n=s.length(),m=r.length();
+        if(s==r)
+            return 0;
+        if(n==0||m==0)
+            return abs(n-m);
+         memset(dp,0,sizeof(dp));
+        for (int i = 0; i <= n; ++i) dp[i][0] = i;
+        for (int j = 0; j <= m; ++j) dp[0][j] = j;
+        int i,j;
+         for(i=1;i<=n;i++)
+         {
+             for(j=1;j<=m;j++)
+             {
+                 if(s[i-1]==r[j-1])
+                 {
+                     dp[i][j]=dp[i-1][j-1];
+                 }
+                 else
+                 {
+                     dp[i][j]=1+min(dp[i-1][j],dp[i][j-1]);
+                     dp[i][j]=min(dp[i][j],1+dp[i-1][j-1]);
+                 }
+             }
+         }
+    return dp[n][m];
+    }       
+};
