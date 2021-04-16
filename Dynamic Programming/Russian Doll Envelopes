@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxEnvelopes(vector<vector<int>>& e) {
+        int i,n=e.size(),x,y,a,b,j;
+        if(n==0)
+            return 0;
+        vector<pair<int,int>> p(n);
+        int maxi=1;
+        for(i=0;i<n;i++)
+        {
+            p[i]={e[i][0],e[i][1]};
+        }
+        sort(p.begin(),p.end());
+        vector<int> dp(n,1);
+        dp[0]=1;
+        for(i=1;i<n;i++)
+        {
+            x=p[i].first;y=p[i].second;
+            for(j=0;j<i;j++)
+            {
+                a=p[j].first;b=p[j].second;
+                if(x>a&&y>b&&dp[i]<dp[j]+1)
+                {
+                    dp[i]=dp[j]+1;
+                }
+            }
+            maxi=max(maxi,dp[i]);
+        }
+        return maxi;
+    }
+};
