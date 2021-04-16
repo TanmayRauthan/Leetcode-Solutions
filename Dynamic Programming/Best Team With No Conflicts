@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int dp[1005][1005];
+    int solve(vector<pair<int,int>> pa,int i,int maxi)
+    {
+        if(i>=pa.size())
+            return 0;
+        if(dp[i][maxi]!=-1)
+            return dp[i][maxi];
+        int x=0,y=0;
+        if(maxi<=pa[i].second)
+        {
+            x=pa[i].first+solve(pa,i+1,max(pa[i].second,maxi)); 
+        }
+        y=solve(pa,i+1,maxi);
+        return dp[i][maxi]=max(x,y);
+    }
+    int bestTeamScore(vector<int>& v, vector<int>& a) {
+        int i,n=v.size();
+        vector<pair<int,int>> pa(n);
+        for(i=0;i<n;i++)
+        {
+            pa[i].first=v[i];
+            pa[i].second=a[i];
+        }
+        memset(dp,-1,sizeof(dp));
+        sort(pa.begin(), pa.end(),[&](pair<int,int>a, pair<int,int>b){
+        if(a.first<b.first){
+            return true;
+        }
+        if(a.first==b.first){
+            return a.second < b.second; 
+        }
+        return false;
+    });
+        for(i=0;i<n;i++)
+        {
+            cout<<pa[i].first<<" "<<pa[i].second<<endl;
+        }
+        return solve(pa,0,0);
+    }
+};
