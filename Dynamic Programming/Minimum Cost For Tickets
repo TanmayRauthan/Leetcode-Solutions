@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int mincostTickets(vector<int>& ar, vector<int>& co) {
+        int i;
+        int c1=co[0],c2=co[1],c3=co[2];
+        i=0;int n=ar.size();int maxi=ar[n-1];
+        int dp[maxi+5];
+        dp[0]=0;
+        map<int,int> m;
+        for(i=0;i<n;i++)
+        {
+            m[ar[i]]=1;
+        }
+        for(i=1;i<=maxi;i++)
+        {
+            if(m[i]==0)
+                dp[i]=dp[i-1];
+            else
+            {
+                dp[i]=min(dp[i-1]+c1,dp[max(0,i-7)]+c2);
+                dp[i]=min(dp[i],dp[max(0,i-30)]+c3);
+            }
+        }
+        return dp[maxi];
+    }
+};
